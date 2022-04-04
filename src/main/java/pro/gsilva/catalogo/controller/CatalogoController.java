@@ -7,8 +7,10 @@ import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import pro.gsilva.catalogo.model.Categoria;
 import pro.gsilva.catalogo.model.Musica;
 import pro.gsilva.catalogo.service.CatalogoService;
+import pro.gsilva.catalogo.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +26,17 @@ public class CatalogoController {
     @Autowired 
     private CatalogoService catalogoService;
 
+    @Autowired 
+    private CategoriaService categoriaService;
+
     @RequestMapping(value="/musicas", method=RequestMethod.GET)
     public ModelAndView getMusicas() {
         ModelAndView mv = new ModelAndView("musicas");
         List<Musica> musicas = catalogoService.findAll();
+        List<Categoria> categorias = categoriaService.findAll();
+        mv.addObject("categorias", categorias);
         mv.addObject("musicas", musicas);
+        
         return mv;
     }
 
@@ -44,13 +52,18 @@ public class CatalogoController {
     public ModelAndView getFormEdit(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("musicaForm");
         Musica musica = catalogoService.findById(id);
+        List<Categoria> categorias = categoriaService.findAll();
+        mv.addObject("categorias", categorias);
         mv.addObject("musica", musica);
         return mv;
     }
 
     @RequestMapping(value="/addMusica", method=RequestMethod.GET)
-    public String getMusicaForm(Musica musica) {
-        return "musicaForm";
+    public ModelAndView getMusicaForm(Musica musica) {
+        ModelAndView mv = new ModelAndView("musicaForm");
+        List<Categoria> categorias = categoriaService.findAll();
+        mv.addObject("categorias", categorias);
+        return mv;
     }
     
     @RequestMapping(value="/addMusica", method=RequestMethod.POST)
@@ -67,9 +80,11 @@ public class CatalogoController {
     }
 
     @GetMapping("/musicas/pesquisar")
-    public ModelAndView pesquisar(@RequestParam("titulo") String titulo) {
+    public ModelAndView pesquisar(@RequestParam("titulo") String titulo, @RequestParam("categoria") int categoria) {
         ModelAndView mv = new ModelAndView("musicas");
-        List<Musica> musicas = catalogoService.findByTitulo(titulo);
+        List<Musica> musicas = catalogoService.findByTituloAndCategory(titulo, categoria);
+        List<Categoria> categorias = categoriaService.findAll();
+        mv.addObject("categorias", categorias);
         mv.addObject("musicas", musicas);
         return mv;
     }

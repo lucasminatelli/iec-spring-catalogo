@@ -10,5 +10,5 @@ public interface CatalogoService {
     Musica save(Musica musica);
     void excluir(long id);
 
-    List<Musica> findByTitulo(String titulo);
+    List<Musica> findByTituloAndCategory(String titulo, long id_category);
 }

@@ -19,7 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_LIST = {
         "/",
         "/musicas",
-        "/musicas/{id}"
+        "/musicas/{id}",
+        "/categorias",
+        "/categorias/{id}"
     };
 
     @Override

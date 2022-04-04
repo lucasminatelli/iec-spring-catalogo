@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.persistence.OneToOne;
 
+import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
@@ -37,5 +39,8 @@ public class Musica {
     @Lob
     private String letra;
 
-    
+    @OneToOne
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private Categoria categoria;
+
 }
