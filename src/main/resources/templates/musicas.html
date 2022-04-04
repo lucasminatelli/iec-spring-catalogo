@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-    <title>Catalogo Musical</title>
+    <title>Catálogo Musical</title>
     <th:block th:include="fragments/geral.html :: headerfiles">
     </th:block>
 </head>
@@ -13,6 +13,12 @@
             <form class="form-inline" th:action="@{/musicas/pesquisar}" method="GET">
                 <input class="form-control mr-sm-2" type="search" name="titulo" placeholder="Titulo"
                        aria-label="Search">
+                <div class="form-group">
+                    <label class="col-form-label">Selecione uma categoria </label>
+                    <select id="categoria" name="categoria">
+                        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"/>
+                    </select>
+                </div>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Procurar</button>
             </form>
 
@@ -24,6 +30,7 @@
                     <div class="col-sm-8">
                         <p class="card-subtitle mb-2 text-muted">
                             <span th:text="${musica.autor}"></span> |
+                            <span th:text="${musica.categoria.nome}"></span> |
                             <span th:text="${musica.data}"></span>
                         </p>
                     </div>
