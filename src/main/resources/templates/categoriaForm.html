@@ -17,6 +17,7 @@
             <div>
                 <th:block th:include="mensagemErro"></th:block>
             </div>
+
             <form th:action="@{/categorias/form}" method="post" th:object="${categoria}" class="form">
                 <input type="hidden" name="id" th:value="${categoria.id}"/>
                 <div class="form-group">
@@ -27,7 +28,7 @@
             
                 <div class="alert alert-warning" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
 
-                <small class="form-text text-muted">* Campos obrigatórios</small>
+                <small class="form-text text-muted">(*) Campos obrigatórios</small>
 
                 <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Publicar</button>
                 <a href="/categorias" class="btn btn-light" role="button" style="margin-top: 10px;">Cancelar</a>
